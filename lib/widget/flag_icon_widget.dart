@@ -7,27 +7,42 @@ import 'package:provider/provider.dart';
 class FlagIconWidget extends StatelessWidget {
   const FlagIconWidget({Key? key}) : super(key: key);
 
+  String getLanguageAccessibility(BuildContext context, String languageCode) {
+    switch (languageCode) {
+      case 'en':
+        return AppLocalizations.of(context)!.accLocaleItem2;
+      case 'id':
+      default:
+        return AppLocalizations.of(context)!.accLocaleItem1;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonHideUnderline(
-      child: DropdownButton(
-        icon: const Icon(Icons.flag),
-        items: AppLocalizations.supportedLocales.map((Locale locale) {
-          final flag = Localization.getFlag(locale.languageCode);
-          return DropdownMenuItem(
-              onTap: () {
-                final provider = Provider.of<LocalizationProvider>(context, listen: false);
-                provider.setLocale(locale);
-              },
-              value: locale,
-              child: Center(
-                child: Text(
-                  flag,
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ));
-        }).toList(),
-        onChanged: (_) {},
+    return Semantics(
+      label: AppLocalizations.of(context)!.accChangeLanguage,
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton(
+          icon: const Icon(Icons.flag),
+          items: AppLocalizations.supportedLocales.map((Locale locale) {
+            final flag = Localization.getFlag(locale.languageCode);
+            final accFlag = getLanguageAccessibility(context, locale.languageCode);
+            return DropdownMenuItem(
+                onTap: () {
+                  final provider = Provider.of<LocalizationProvider>(context, listen: false);
+                  provider.setLocale(locale);
+                },
+                value: locale,
+                child: Center(
+                  child: Text(
+                    flag,
+                    style: Theme.of(context).textTheme.headline4,
+                    semanticsLabel: accFlag,
+                  ),
+                ));
+          }).toList(),
+          onChanged: (_) {},
+        ),
       ),
     );
   }

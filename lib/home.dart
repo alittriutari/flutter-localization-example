@@ -7,6 +7,8 @@ import 'package:dicoding_subscriptions/content/benefit_widget.dart';
 import 'package:dicoding_subscriptions/content/header_widget.dart';
 import 'package:dicoding_subscriptions/widget/packet_list.dart';
 
+import 'common.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -16,16 +18,25 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Image.asset("assets/dicoding-academy.png"),
+          child: Image.asset(
+            "assets/dicoding-academy.png",
+            semanticLabel: AppLocalizations.of(context)!.accLogoAppBar,
+          ),
         ),
-        title: const Text("Dicoding Academy"),
+        title: Text(
+          "Dicoding Academy",
+          semanticsLabel: AppLocalizations.of(context)!.accTitleAppBar,
+        ),
         actions: [
           const FlagIconWidget(),
           IconButton(
             onPressed: () {
               AppSettings.openDeviceSettings();
             },
-            icon: const Icon(Icons.settings),
+            icon: const Icon(
+              Icons.settings,
+            ),
+            tooltip: AppLocalizations.of(context)!.accOpenSetting,
           ),
         ],
       ),

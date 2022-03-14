@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         final provider = Provider.of<LocalizationProvider>(context);
         return MaterialApp(
+          // showSemanticsDebugger: true,
           locale: provider.locale,
           title: 'Flutter Localization & Accessibility',
           theme: ThemeData(
